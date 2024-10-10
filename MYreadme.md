@@ -25,3 +25,4 @@
 ├── outputs               # 包括脚本执行输出结果：logs，video，检查点等
 └── tests                 # pytest实用工具用于持续集成
 ```
+## 运行LeroBot
