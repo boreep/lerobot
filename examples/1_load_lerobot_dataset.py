@@ -12,6 +12,21 @@ Features included in this script:
 
 The script ends with examples of how to batch process data using PyTorch's DataLoader.
 """
+"""
+该脚本演示了如何使用“LeRobotDataset”类来处理和处理来自 Hugging Face 的机器人数据集。
+它说明了如何加载数据集、操作数据集以及应用适合 PyTorch 中的机器学习任务的转换。
+该类会自动从Hugging Face中心下载数据
+
+该脚本包含的功能：
+-加载数据集并访问其属性。
+-按剧集编号过滤数据。
+-转换张量数据以进行可视化。
+-从数据集帧保存视频文件。
+-使用高级数据集功能，例如基于时间戳的帧选择。
+-演示与 PyTorch DataLoader 的批处理兼容性。
+
+该脚本最后提供了如何使用 PyTorch 的 DataLoader 批量处理数据的示例
+"""
 
 from pathlib import Path
 from pprint import pprint
@@ -31,6 +46,22 @@ repo_id = "lerobot/pusht"
 # You can easily load a dataset from a Hugging Face repository
 dataset = LeRobotDataset(repo_id)
 
+#非在线方式
+"""
+# 定义本地数据目录
+LOCAL_DATA_DIR = "/path/to/local/dataset"
+DATA_DIR = Path(LOCAL_DATA_DIR)
+
+print("List of available datasets:")
+pprint(lerobot.available_datasets)
+
+# Let's take one for this example
+repo_id = "lerobot/pusht"
+
+# 通过将本地数据目录传递给构造函数来加载数据集
+dataset = LeRobotDataset(repo_id, root=DATA_DIR)
+"""
+
 # LeRobotDataset is actually a thin wrapper around an underlying Hugging Face dataset
 # (see https://huggingface.co/docs/datasets/index for more information).
 print(dataset)
@@ -44,25 +75,27 @@ print(f"keys to access images from cameras: {dataset.camera_keys=}\n")
 # Access frame indexes associated to first episode
 episode_index = 0
 from_idx = dataset.episode_data_index["from"][episode_index].item()
-to_idx = dataset.episode_data_index["to"][episode_index].item()
+to_idx = dataset.episode_data_index["to"][episode_index].item() #不包括这个值本身，即需要-1
 
 # LeRobot datasets actually subclass PyTorch datasets so you can do everything you know and love from working
-# with the latter, like iterating through the dataset. Here we grab all the image frames.
+# with the latter, like iterating through the dataset. 这里我们抓取所有帧.
 frames = [dataset[idx]["observation.image"] for idx in range(from_idx, to_idx)]
 
 # Video frames are now float32 in range [0,1] channel first (c,h,w) to follow pytorch convention. To visualize
-# them, we convert to uint8 in range [0,255]
+# them, we convert to uint8 in range [0,255]，
+# 转换为通道优先的uint8张量，范围为[0,255]，并改变维度顺序
 frames = [(frame * 255).type(torch.uint8) for frame in frames]
 # and to channel last (h,w,c).
 frames = [frame.permute((1, 2, 0)).numpy() for frame in frames]
 
-# Finally, we save the frames to a mp4 video for visualization.
+# Finally, we save the frames to a mp4 video for visualization.保存为MP4文件
 Path("outputs/examples/1_load_lerobot_dataset").mkdir(parents=True, exist_ok=True)
 imageio.mimsave("outputs/examples/1_load_lerobot_dataset/episode_0.mp4", frames, fps=dataset.fps)
 
 # For many machine learning applications we need to load the history of past observations or trajectories of
 # future actions. Our datasets can load previous and future frames for each key/modality, using timestamps
 # differences with the current loaded frame. For instance:
+#读取特殊时间帧下的数据
 delta_timestamps = {
     # loads 4 images: 1 second before current frame, 500 ms before, 200 ms before, and current frame
     "observation.image": [-1, -0.5, -0.20, 0],

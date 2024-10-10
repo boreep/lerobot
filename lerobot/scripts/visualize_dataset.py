@@ -19,22 +19,29 @@ Note: The last frame of the episode doesnt always correspond to a final state.
 That's because our datasets are composed of transition from state to state up to
 the antepenultimate state associated to the ultimate action to arrive in the final state.
 However, there might not be a transition from a final state to another state.
+最后一帧不一定对应最终状态：
+数据集中的最后一帧不一定是一个最终状态。这是因为数据集由状态到状态的转换组成，
+直到倒数第二个状态（与到达最终状态的最后一个动作相关联）。
+因此，最后一帧不一定表示一个终止状态。
 
 Note: This script aims to visualize the data used to train the neural networks.
 ~What you see is what you get~. When visualizing image modality, it is often expected to observe
 lossly compression artifacts since these images have been decoded from compressed mp4 videos to
 save disk space. The compression factor applied has been tuned to not affect success rate.
+压缩影响：
+当从压缩的 MP4 视频中解码图像时，可能会观察到轻微的压缩伪影。这是为了节省磁盘空间而进行的压缩处理。
+压缩因子已经调优，以不影响成功率。
 
 Examples:
 
-- Visualize data stored on a local machine:
+- Visualize data stored on a local machine:在本地机器上可视化数据
 ```
 local$ python lerobot/scripts/visualize_dataset.py \
     --repo-id lerobot/pusht \
     --episode-index 0
 ```
 
-- Visualize data stored on a distant machine with a local viewer:
+- Visualize data stored on a distant machine with a local viewer:在远程机器上保存数据并在本地查看
 ```
 distant$ python lerobot/scripts/visualize_dataset.py \
     --repo-id lerobot/pusht \
@@ -46,7 +53,7 @@ local$ scp distant:path/to/directory/lerobot_pusht_episode_0.rrd .
 local$ rerun lerobot_pusht_episode_0.rrd
 ```
 
-- Visualize data stored on a distant machine through streaming:
+- Visualize data stored on a distant machine through streaming通过流媒体在本地查看远程机器上的数据:
 (You need to forward the websocket port to the distant machine, with
 `ssh -L 9087:localhost:9087 username@remote-host`)
 ```
