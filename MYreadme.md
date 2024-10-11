@@ -63,7 +63,7 @@ dataset attributes:
 - info 使用 JSON 保存
 
 
-## 加载数据集示例 `/examples/1_load_lerobot_dataset.py`
+## 1加载数据集示例 `/examples/1_load_lerobot_dataset.py`
 该脚本演示了如何使用 `LeRobotDataset`类来处理和处理来自 **Hugging Face** 的机器人数据集。它说明了如何加载数据集、操作数据集以及应用适合 PyTorch 中的机器学习任务的转换。
 
 该脚本包含的功能：
@@ -75,5 +75,19 @@ dataset attributes:
 - 演示与 PyTorch DataLoader 的批处理兼容性。
 
 该脚本最后提供了如何使用 PyTorch 的 DataLoader 批量处理数据的示例
+
+## 2评估预训练模型示例 `/examples/2_evaluate_pretrained_model.py`
+该脚本演示了如何加载预训练模型并在测试数据集上评估其性能。它说明了如何加载模型、加载评估环境、评估模型在特定环境下的性能、保存结果、可视化结果。
+
+## 3-4训练模型示例 
+`/examples/3_train_model.py`是使用python和一些核心库的训练，与`train.py`无关，`/examples/4_train_policy_with_script.md`是从命令行使用训练脚本示例。__命令行形式调用似乎适用度更高__
+
+## 5从某一检查点恢复训练`5_resume_training.md`
+
+## 6torchvision 的图像变换功能对 LeRobotDataset 中的数据进行数据增强。`6_add_image_transforms.py`
+这段代码的主要功能是展示如何利用 torchvision 库中的图像变换来增强 LeRobotDataset 数据集中的图像数据。它首先创建了一个未经变换的数据集实例，然后定义了一组随机变换（包括亮度、对比度调整及锐度增强），并基于这些变换创建了另一个数据集实例。接着，它分别保存了一个原始图像帧和应用了变换后的图像帧至指定的输出目录，以便于对比查看变换前后的效果。这有助于提升机器学习模型训练时的数据多样性，从而改善模型性能。
+
+
+
 
 

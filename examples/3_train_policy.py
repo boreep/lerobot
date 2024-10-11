@@ -1,5 +1,5 @@
 """This scripts demonstrates how to train Diffusion Policy on the PushT environment.
-
+这个脚本演示了如何训练PushT环境的Diffusion Policy。
 Once you have trained a model with this script, you can try to evaluate it on
 examples/2_evaluate_pretrained_policy.py
 """
