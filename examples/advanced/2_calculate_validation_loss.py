@@ -7,7 +7,13 @@ Furthermore, relying on validation loss to evaluate performance is generally not
 especially in the context of imitation learning. The most reliable approach is to evaluate the policy directly
 on the target environment, whether that be in simulation or the real world.
 """
+"""
+ 这段注释解释了如何通过对数据集进行切片(分为训练集和测试集)并在数据子集上计算损失来帮助调试、测试以及检查策略是否有效学习。
+ 此外，注释还提到，仅依靠验证损失来评估性能通常不是一种好的做法，
+ 特别是在模仿学习的背景下。最可靠的方法是在目标环境中直接评估策略，无论是在仿真环境中还是在现实世界中。
 
+ 总的来说，这段代码将数据集分为测试集和验证集，采用验证损失而非在仿真环境或真实环境中直接评估策略，
+"""
 import math
 from pathlib import Path
 
