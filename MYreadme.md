@@ -77,7 +77,8 @@ dataset attributes:
 该脚本最后提供了如何使用 PyTorch 的 DataLoader 批量处理数据的示例
 
 ## 2评估预训练模型示例 `/examples/2_evaluate_pretrained_model.py`
-该脚本演示了如何加载预训练模型并在测试数据集上评估其性能。它说明了如何加载模型、加载评估环境、评估模型在特定环境下的性能、保存结果、可视化结果。
+该脚本演示了如何加载预训练模型并在测试数据集上评估其性能。它说明了如何加载模型、加载评估环境、
+评估模型在特定环境下的性能、保存结果、可视化结果。
 
 ## 3-4训练模型示例 
 `/examples/3_train_model.py`是使用python和一些核心库的训练，与`train.py`无关，`/examples/4_train_policy_with_script.md`是从命令行使用训练脚本示例。__命令行形式调用似乎适用度更高__
